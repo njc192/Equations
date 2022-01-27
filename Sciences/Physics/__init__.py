@@ -1,5 +1,6 @@
 from mpmath import *
 
+from Sciences import PhysicsLabs
 from Sciences.BaseUnitConverter import Unit
 
 mp.prec = 20
@@ -42,8 +43,22 @@ def solve_wavelength(velocity, frequency):
 def solve_frequency(velocity, wavelength):
     return velocity / wavelength
 
-def solve_f_n(length,velocity,n):
-    return (n*velocity)/(2*length)
+
+def solve_f_n_string(length, velocity, n):
+    return (n * velocity) / (2 * length)
+
+
+def solve_f_n_open_closed_tube(length, velocity, n):
+    return (((2 * n) - 1) * velocity) / (4 * length)
+
+
+def solve_wavelength_open_closed_tube(length, n):
+    return (2 * n - 1) / (4 * length)
+
+
+def solve_velocity_with_fn_open_closed_tube(length, n, freq):
+    return (freq * 4 * length) / (2 * n - 1)
+
 
 '''
 POWER
@@ -164,30 +179,43 @@ if __name__ == '__main__':
     Find the tension FT in a vibrating string of length 1.2m, with a total string mass of 8g, 
     driven in the third harmonic mode by a frequency of 125Hz s
     '''
-
-    length = 1.2
-    mass = unit_converter.convert(8, 'g', 'kg')
-
-    f_3 = 125
-    mu = mass / length
+    #
+    # length = 1.2
+    # mass = unit_converter.convert(8, 'g', 'kg')
+    #
+    # f_3 = 125
+    # mu = mass / length
     '''
     v = sqrt(T/mu)
     fn = nv/2L -> 125 = (3V)/2L -> V = 125*2L/3
     '''
 
-    velocity = (2 * length * 125) / 3
+    # velocity = (2 * length * 125) / 3
+    #
+    # print(velocity)
+    #
+    # tension = solve_tension(mu, velocity)
+    #
+    # print(tension)
+    #
+    #
+    # freq = solve_f_n(length,100,3)
+    #
+    # print(freq)
 
-    print(velocity)
+    '''
+    Physics Lab:
+    500 Hz tuning fork
+    '''
 
-    tension = solve_tension(mu, velocity)
+    lengths_500_hz = [.173, .498, .849]
 
-    print(tension)
+    lengths_1000_hz = [.095, .249, .414]
 
-
-    freq = solve_f_n(length,100,3)
-
-    print(freq)
-
-
-
-
+    lengths = lengths_1000_hz
+    frequency = 1000  # 500
+    for i in range(len(lengths)):
+        velocity = solve_velocity_with_fn_open_closed_tube(lengths[i], i + 1, frequency)
+        wavelength = solve_wavelength_open_closed_tube(lengths[i], i + 1)
+        diff = PhysicsLabs.percent_difference(velocity, 340)
+        print(f"Velocity {i + 1}: {velocity} | Wavelength: {wavelength} | %difference= {diff}")

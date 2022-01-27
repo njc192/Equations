@@ -21,7 +21,7 @@ def toss_a_coin():
     return "T"
 
 
-def percent_diff(m1, m2):
+def percent_difference(m1, m2):
     return (abs(m1 - m2) / abs(average([m1, m2]))) * 100
 
 
@@ -56,3 +56,5 @@ if __name__ == '__main__':
     diameter = 0.02005
 
     print(energy(12.2))
+
+
