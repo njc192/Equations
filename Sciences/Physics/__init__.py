@@ -1,3 +1,4 @@
+from math import sqrt
 from mpmath import *
 
 from Sciences import PhysicsLabs
@@ -14,7 +15,7 @@ def solve_velocity_tension_mu(tension, mu):
     return sqrt(tension / mu)
 
 
-def solve_velocity_lambda_freq(wav, freq):
+def solve_velocity_wavelength_freq(wav, freq):
     return freq * wav
 
 
@@ -58,6 +59,10 @@ def solve_wavelength_open_closed_tube(length, n):
 
 def solve_velocity_with_fn_open_closed_tube(length, n, freq):
     return (freq * 4 * length) / (2 * n - 1)
+
+
+def solve_velocity_string(length, n, freq):
+    return (freq * 2 * length) / n
 
 
 '''
@@ -208,14 +213,73 @@ if __name__ == '__main__':
     500 Hz tuning fork
     '''
 
-    lengths_500_hz = [.173, .498, .849]
+    # lengths_500_hz = [.173, .498, .849]
+    #
+    # lengths_1000_hz = [.095, .249, .414]
+    #
+    # lengths = lengths_1000_hz
+    # frequency = 1000  # 500
+    # for i in range(len(lengths)):
+    #     velocity = solve_velocity_with_fn_open_closed_tube(lengths[i], i + 1, frequency)
+    #     wavelength = solve_wavelength_open_closed_tube(lengths[i], i + 1)
+    #     diff = PhysicsLabs.percent_difference(velocity, 340)
+    #     print(f"Velocity {i + 1}: {velocity} | Wavelength: {wavelength} | %difference= {diff}")
 
-    lengths_1000_hz = [.095, .249, .414]
+    string_mass = unit_converter.convert(2.26, 'g', 'kg')
 
-    lengths = lengths_1000_hz
-    frequency = 1000  # 500
-    for i in range(len(lengths)):
-        velocity = solve_velocity_with_fn_open_closed_tube(lengths[i], i + 1, frequency)
-        wavelength = solve_wavelength_open_closed_tube(lengths[i], i + 1)
-        diff = PhysicsLabs.percent_difference(velocity, 340)
-        print(f"Velocity {i + 1}: {velocity} | Wavelength: {wavelength} | %difference= {diff}")
+    print(string_mass / 10)
+
+    string_mass = string_mass/10
+
+    hanging_mass_50_g = unit_converter.convert(50, 'g', 'kg')
+
+    hanging_mass_100_g = unit_converter.convert(100, 'g', 'kg')
+
+
+
+
+    '''
+    Part 1: 
+    Number 2.
+    
+    calculate Tension
+    '''
+
+    freq_50_g = [25.5, 49.8, -1, 94.2]
+
+    freq_100_g = [33.97, -1, 100, 135.6]
+
+    curr_frequency = freq_50_g
+    hanging_mass = hanging_mass_50_g
+    print("mass: ", hanging_mass)
+
+    Length = 1  # m
+
+    mu = string_mass / Length
+    tensions = []
+    for i in range(len(curr_frequency)):
+        print(f"n: {i + 1}")
+
+        print(f"frequency: {curr_frequency[i]}")
+        velocity = solve_velocity_string(Length, i + 1, curr_frequency[i])
+
+        print(f"velocity: {velocity}")
+        wavelength = solve_wavelength(velocity, curr_frequency[i])
+
+        print(f"wavelength: {wavelength}")
+
+        print("mu:", mu)
+        tension = solve_tension(mu, velocity)
+        print(f"tension: {tension}")
+
+        if curr_frequency[i] >= 0:
+            tensions.append(tension)
+
+    '''
+    calculate average tension
+    '''
+    total = 0
+    for i in range(len(tensions)):
+        total += tensions[i]
+
+    print("avg: ", total / len(tensions))

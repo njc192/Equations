@@ -53,8 +53,6 @@ def energy(wavelength):
 
 
 if __name__ == '__main__':
-    diameter = 0.02005
-
-    print(energy(12.2))
+    print("hi")
 
 
