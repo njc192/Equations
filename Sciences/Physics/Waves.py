@@ -34,57 +34,69 @@ from IPython import display
 #     plt.show()
 
 def init_frame():
-    ax.set_xlim(0, 10)
-    ax.set_ylim(-5, 5)
-    return line1, line2, line3
+    for line in lines:
+        line.set_data([], [])
+    return lines
 
 
 def animate(frame_number):
-    x1data.append(frame_number)
-    x2data.append(frame_number)
-    x3data.append(frame_number)
+    value = frame_number/10
+    x1data.append(value)
+    x2data.append(value)
+    x3data.append(value)
 
     amplitude = 3
     k = (2 * np.pi) / 20  # 200pi rad/m
     phase = 0.5
-    x = np.linspace(0, 10, 1000)
-    y1 = amplitude * np.sin(k * frame_number + phase)
+    y1 = amplitude * np.sin(k * value + phase)
 
     y1data.append(y1)
-    y2 = amplitude * np.sin(k * x)
+    y2 = amplitude * np.sin(k * value)
 
     y2data.append(y2)
-    resultant_wave = 2 * amplitude * np.cos(phase * 1 / 2) * np.sin(k * x + phase * (1 / 2))
+    resultant_wave = 2 * amplitude * np.cos(phase * 1 / 2) * np.sin(k * value + phase * (1 / 2))
 
+    max_min.append(resultant_wave)
     y3data.append(resultant_wave)
 
-    line1.set_data(x1data, y1data)
-    line1.set_color('yellow')
+    if abs(resultant_wave) == -5.8015133080021455:
+        print(value)
 
-    line2.set_data(x2data, y2data)
-    line2.set_color('green')
+    xlist = [x1data, x2data, x3data]
+    ylist = [y1data, y2data, y3data]
 
-    line3.set_data(x3data, y3data)
-    line3.set_color('blue')
+    for lnum, line in enumerate(lines):
+        line.set_data(xlist[lnum], ylist[lnum])  # set data for each line separately
 
-    return line1, line2, line3,
+    max_min.sort()
+    # print("max", max_min[len(max_min)-1])
+    # print("min", max_min[0])
+
+    return lines
 
 
-fig, ax = plt.subplots()
+fig = plt.figure()
+ax1 = plt.axes(xlim=(0, 100), ylim=(-10, 10))
+max_min = []
+period = 0.0001
+freq = 1/period
 
-print(fig)
-
+line, = ax1.plot([], [], lw=2)
 x1data, y1data = [], []
-x2data, y2data = [] , []
-x3data, y3data = [] , []
-# line1, = plt.plot([], [], lw=3)
+x2data, y2data = [], []
+x3data, y3data = [], []
 
-line1, = plt.plot([], [], lw=3)
-line2, = plt.plot([], [], lw=3)
-line3, = plt.plot([], [], lw=3)
-anim = animation.FuncAnimation(fig, animate, frames=100, blit=True, init_func=init_frame)
+plotlays, plotcols = [3], ["yellow", "green", "blue"]
+
+lines = []
+for index in range(3):
+    lobj = ax1.plot([], [], lw=2, color=plotcols[index])[0]
+    lines.append(lobj)
+
+anim = animation.FuncAnimation(fig, animate, frames=1200,interval=period, blit=True, init_func=init_frame)
 
 plt.show()
+
 
 
 
