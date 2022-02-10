@@ -84,19 +84,51 @@ units = Unit()
 #
 # wavelength = units.convert_to_base(705, "nm")
 # print("Energy = ", get_energy_using_wavelength(wavelength))
-
-deltaE = delta_energy(3, 2)
-print(deltaE)
-
-freq = get_frequency_with_energy(deltaE)
-
-wavelength = get_wavelength(freq)
-
-
-print(wavelength)
-
-# wavelength = get_wavelength(5.80e14)
+#
+# deltaE = delta_energy(3, 2)
+# print(deltaE)
+#
+# freq = get_frequency_with_energy(deltaE)
+#
+# wavelength = get_wavelength(freq)
+#
 #
 # print(wavelength)
+#
+# # wavelength = get_wavelength(5.80e14)
+# #
+# # print(wavelength)
+#
+# print(get_frequency(4500))
 
-print(get_frequency(4500))
+
+# arr = [656.2, 486.1, 434,410]
+#
+# for i in range(len(arr)):
+#     wav = arr[i]
+#     wav = units.convert_to_base(wav,"nm")
+#     freq = get_frequency(wav)
+#     energy = get_energy(freq)
+#     print(energy)
+#
+#     n = solve_for_n_energy(energy,freq)
+#
+#     print(n)
+# wav = units.convert_to_base(656.2, "nm")
+# energy = get_energy_using_wavelength(wav)
+# deltaE = 3.03e-19
+# nf_squared = 4
+# e_ov_ry = deltaE/Ry
+# one_ov_nfsquared = 1/nf_squared
+#
+# sum = e_ov_ry + one_ov_nfsquared
+#
+# ni = 1/sqrt(sum)
+#
+# print(ni)
+
+wav = units.convert_to_base(352,"nm")
+
+freq = get_frequency(wav)
+
+print(freq)

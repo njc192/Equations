@@ -52,7 +52,22 @@ def energy(wavelength):
     return ((6.63 * pow(10, -34)) * (3 * pow(10, 8))) / wav
 
 
+def theta_critical(n1, n2):
+    rads = math.radians(n2/n1)
+    return math.asin(rads)
+
+
+def rays_solve_theta2(n1,n2,theta1):
+    rads = math.radians(theta1)
+    theta2 = math.asin((n1*math.sin(rads))/n2)
+    return theta2
+
+
 if __name__ == '__main__':
-    print("hi")
+
+    '''
+    LAB 3
+    '''
+
 
 

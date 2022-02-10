@@ -1,4 +1,8 @@
+import math
 from math import sqrt
+
+import mpmath.libmp
+import numpy
 from mpmath import *
 
 from Sciences import PhysicsLabs
@@ -66,7 +70,7 @@ def solve_velocity_string(length, n, freq):
 
 
 def solve_n_with_L_frequency_velocity(length, frequency, velocity):
-    return ((4 * length * frequency)/velocity + 1) / 2
+    return ((4 * length * frequency) / velocity + 1) / 2
 
 
 def solve_wavelength_open_closed_tube(length):
@@ -300,3 +304,82 @@ if __name__ == '__main__':
     #     print("wavelength ", wavelength)
     #     print(f"n: {solve_n_with_L_frequency_velocity(lengths[i], 500,340)}")
 
+'''
+Lab 2
+Part 1
+'''
+
+# print("f1=", 340 / (2 * .45))
+# arr = [1273, 837.5, 666.5, 439.5]
+# f1 = 340 / (2 * .4)
+# f1_experiment = 0
+# for i in range(len(arr)):
+#     n = numpy.round(arr[i] / f1)
+#     f_exp = arr[i] / n
+#     f1_experiment +=f_exp
+#     percent_diff = PhysicsLabs.percent_difference(f_exp, f1)
+#
+#     print(percent_diff)
+#     # print(f"f:{arr[i]} = {n}")
+#     # print(f"fexperiment/n={f_exp}")
+#
+#
+# avg_f1 = f1_experiment/len(arr)
+# print(avg_f1)
+#
+# print(PhysicsLabs.percent_difference(f1,avg_f1))
+
+'''
+Part 2
+'''
+
+# arr = [33.4, 25.1, 17.5, 8.3]
+# print("L1 - L2 = ", arr[0] - arr[1])
+# dL1 = arr[0] - arr[1]
+# print("L2 - L3 = ", arr[1] - arr[2])
+# dL2 = arr[1] - arr[2]
+# print("L3 - L4 = ", arr[2] - arr[3])
+# dL3 = arr[2] - arr[3]
+#
+# total = dL1+dL2+dL3
+# avg = total/3
+#
+# print(avg)
+# print(2*avg)
+#
+# lambda_exp = unit_converter.convert_to_base(2*avg,"cm")
+# lambda_theor = 340/2000
+#
+# percent_diff = PhysicsLabs.percent_difference(lambda_theor,lambda_exp)
+#
+# print(percent_diff)
+
+
+'''
+Part 3
+'''
+f1_theory = 340 / (4 * (.40))
+print(f"f_theory {f1_theory}")
+frequencies = [1061.5, 1296, 1487, 2000]
+vel = 340
+L = .40
+total = 0
+for i in range(len(frequencies)):
+    f_exp = frequencies[i]
+    tn_1 = numpy.round(f_exp / f1_theory)
+    n = (tn_1 + 1) / 2
+
+    print(f"{tn_1} -> n= {n}")
+    # print(f"f_exp/(2n-1)= {f_exp/tn_1}")
+    # print(f"fn_theory = {f1_theory*tn_1}")
+    total += f_exp/(2 * math.floor(n) - 1)
+    percent_diff = PhysicsLabs.percent_difference(f_exp, f1_theory * (2 * math.floor(n) - 1))
+    print(percent_diff)
+avg = total/len(frequencies)
+
+print(avg)
+percent_diff = PhysicsLabs.percent_difference(f1_theory,avg)
+print(percent_diff)
+
+lambda_exp = 340/226.53
+print(lambda_exp)
