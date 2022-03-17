@@ -63,11 +63,13 @@ def rays_solve_theta2(n1,n2,theta1):
     return theta2
 
 
+
 if __name__ == '__main__':
 
     '''
     LAB 3
     '''
+
 
 
 

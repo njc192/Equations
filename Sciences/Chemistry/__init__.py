@@ -1,4 +1,5 @@
 from mpmath import *
+from molmass import Formula
 
 from Sciences.BaseUnitConverter import Unit
 
@@ -127,8 +128,17 @@ units = Unit()
 #
 # print(ni)
 
-wav = units.convert_to_base(352,"nm")
+# wav = units.convert_to_base(352,"nm")
+#
+# freq = get_frequency(wav)
+#
+# print(freq)
+a = Formula('C5H5NO2')
+f = Formula('BaS')
 
-freq = get_frequency(wav)
 
-print(freq)
+
+print(a.composition())
+
+
+print(f.formula)
