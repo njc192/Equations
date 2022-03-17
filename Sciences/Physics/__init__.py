@@ -99,6 +99,12 @@ def super_positions(amplitude, wavelength, period, x, t):
     return 2 * amplitude * sin(k * x) * sin(omega * t)
 
 
+
+def focal_length(di, do):
+    over_f = (1 / di + 1 / do)
+    return 1/over_f
+
+
 if __name__ == '__main__':
     unit_converter = Unit()
     '''
@@ -358,28 +364,33 @@ Part 2
 '''
 Part 3
 '''
-f1_theory = 340 / (4 * (.40))
-print(f"f_theory {f1_theory}")
-frequencies = [1061.5, 1296, 1487, 2000]
-vel = 340
-L = .40
-total = 0
-for i in range(len(frequencies)):
-    f_exp = frequencies[i]
-    tn_1 = numpy.round(f_exp / f1_theory)
-    n = (tn_1 + 1) / 2
+# f1_theory = 340 / (4 * (.40))
+# print(f"f_theory {f1_theory}")
+# frequencies = [1061.5, 1296, 1487, 2000]
+# vel = 340
+# L = .40
+# total = 0
+# for i in range(len(frequencies)):
+#     f_exp = frequencies[i]
+#     tn_1 = numpy.round(f_exp / f1_theory)
+#     n = (tn_1 + 1) / 2
+#
+#     print(f"{tn_1} -> n= {n}")
+#     # print(f"f_exp/(2n-1)= {f_exp/tn_1}")
+#     # print(f"fn_theory = {f1_theory*tn_1}")
+#     total += f_exp/(2 * math.floor(n) - 1)
+#     percent_diff = PhysicsLabs.percent_difference(f_exp, f1_theory * (2 * math.floor(n) - 1))
+#     print(percent_diff)
+# avg = total/len(frequencies)
+#
+# print(avg)
+# percent_diff = PhysicsLabs.percent_difference(f1_theory,avg)
+# print(percent_diff)
+#
+# lambda_exp = 340/226.53
+# print(lambda_exp)
 
-    print(f"{tn_1} -> n= {n}")
-    # print(f"f_exp/(2n-1)= {f_exp/tn_1}")
-    # print(f"fn_theory = {f1_theory*tn_1}")
-    total += f_exp/(2 * math.floor(n) - 1)
-    percent_diff = PhysicsLabs.percent_difference(f_exp, f1_theory * (2 * math.floor(n) - 1))
-    print(percent_diff)
-avg = total/len(frequencies)
 
-print(avg)
-percent_diff = PhysicsLabs.percent_difference(f1_theory,avg)
+percent_diff = PhysicsLabs.percent_difference(24.78,25)
+
 print(percent_diff)
-
-lambda_exp = 340/226.53
-print(lambda_exp)
